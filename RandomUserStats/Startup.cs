@@ -2,9 +2,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using RandomUserStats.Services;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace RandomUserStats
 {
@@ -20,7 +23,20 @@ namespace RandomUserStats
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+			services.AddMvc(options =>
+			{
+				options.RespectBrowserAcceptHeader = true;
+				options.OutputFormatters.Add(new XmlSerializerOutputFormatter());
+				options.OutputFormatters.Add(new MyTextOutputFormatter());
+			})
+				.SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+			services.AddScoped<IRandomUserStatService, RandomUserStatService>();
+
+			services.AddSwaggerGen(c =>
+			{
+				c.SwaggerDoc("v1", new Info { Title = "Random User Statistics", Version = "v1" });
+			});
 
 			// In production, the Angular files will be served from this directory
 			services.AddSpaStaticFiles(configuration =>
@@ -46,6 +62,13 @@ namespace RandomUserStats
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
 			app.UseSpaStaticFiles();
+
+			app.UseSwagger();
+
+			app.UseSwaggerUI(c =>
+			{
+				c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+			});
 
 			app.UseMvc(routes =>
 			{
