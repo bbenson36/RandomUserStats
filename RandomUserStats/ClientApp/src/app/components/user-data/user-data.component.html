@@ -1,0 +1,9 @@
+<form class="user-data" (ngSubmit)="onSubmit()">
+  <mat-form-field class="user-data-full-width">
+    <textarea matInput placeholder="Json UserData" [(ngModel)]="userDataInput" name="userData"></textarea>
+  </mat-form-field>
+  <button mat-raised-button type="submit" color="primary">Submit</button>
+
+  <button mat-raised-button color="primary" (click)="file.click()">Upload</button> <input hidden type="file"
+    (change)="handleFileInput($event.target.files)" #file>
+</form>
