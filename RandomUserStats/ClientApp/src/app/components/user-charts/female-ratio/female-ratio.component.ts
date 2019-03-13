@@ -14,7 +14,7 @@ export class FemaleRatioComponent implements OnInit {
   public pieChartOptions: ChartOptions = {
     responsive: true
   };
-  public pieChartLabels: Label[] = ['Male', 'Female'];
+  public pieChartLabels: Label[] = ['Female', 'Male'];
   public pieChartData: SingleDataSet = [.5, .5];
   public pieChartType: ChartType = 'pie';
 

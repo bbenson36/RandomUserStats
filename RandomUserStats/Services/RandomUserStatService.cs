@@ -108,6 +108,7 @@ namespace RandomUserStats.Services
 						MalePercent = x.Value[(int)Gender.Male] / totalStatePopulation
 					};
 				}).OrderByDescending(x => x.PercentageOfTotalPopulation)
+				.Take(10)
 				.ToList();
 		}
 
