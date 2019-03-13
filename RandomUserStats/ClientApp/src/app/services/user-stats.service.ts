@@ -2,6 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { UserStats } from '../user-stats';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -23,9 +24,10 @@ export class UserStatsService {
 
   private _userStats: BehaviorSubject<UserStats>;
   private userStatsUrl: string;
-  dataRequested: Boolean;
+  dataRequested: boolean;
+  errorInRequest: boolean;
 
-  constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+  constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string, private router: Router) {
     this._userStats = <BehaviorSubject<UserStats>>new BehaviorSubject(null);
     this.dataStore = { userStats: null };
     this.userStatsUrl = baseUrl + 'api/RandomUserStats/CreateRandomUserStatReport';
@@ -37,11 +39,18 @@ export class UserStatsService {
 
   requestUserStats(request: string) {
     this.dataRequested = true;
+    this.errorInRequest = false;
     this.http.post<UserStats>(this.userStatsUrl, request, this.httpOptions)
       .subscribe(data => {
         this.dataStore.userStats = data;
         this._userStats.next(Object.assign({}, this.dataStore).userStats);
-      }, error => console.log('Could not load stats'));
+      }, error => {
+        console.log('Could not load stats');
+        this.dataStore.userStats = null;
+        this.dataRequested = false;
+        this.errorInRequest = true;
+        this.router.navigate(['/']);
+      });
   }
 
   requestRandomUsers() {

@@ -13,6 +13,8 @@
   <mat-drawer-content>
     <form class="user-data" (ngSubmit)="onSubmit()">
       <div class="example-container">
+        <mat-error *ngIf="userStatsService.errorInRequest">Invalid
+              request data!</mat-error>
         <mat-form-field class="user-data-full-width">
           <textarea matInput placeholder="Json UserData" [(ngModel)]="userDataInput" name="userData"></textarea>
         </mat-form-field>
