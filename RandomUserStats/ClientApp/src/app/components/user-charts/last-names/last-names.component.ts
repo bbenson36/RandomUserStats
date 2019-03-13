@@ -1,20 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { UserStatsService } from '../../services/user-stats.service';
-import { UserStats } from '../../user-stats';
+import { UserStatsService } from '../../../services/user-stats.service';
+import { UserStats } from '../../../user-stats';
 import { ChartOptions, ChartType } from 'chart.js';
 import { Label, SingleDataSet } from 'ng2-charts';
 
 @Component({
-  selector: 'app-female-ratio',
-  templateUrl: './female-ratio.component.html',
-  styleUrls: ['./female-ratio.component.css']
+  selector: 'app-last-names',
+  templateUrl: './last-names.component.html',
+  styleUrls: ['./last-names.component.css']
 })
-export class FemaleRatioComponent implements OnInit {
-
+export class LastNamesComponent implements OnInit {
   public pieChartOptions: ChartOptions = {
     responsive: true
   };
-  public pieChartLabels: Label[] = ['Male', 'Female'];
+  public pieChartLabels: Label[] = ['Last Names A-M', 'Last Names N-Z'];
   public pieChartData: SingleDataSet = [.5, .5];
   public pieChartType: ChartType = 'pie';
 
@@ -27,7 +26,7 @@ export class FemaleRatioComponent implements OnInit {
 
   updateChart(userStats: UserStats) {
     if (userStats) {
-      this.pieChartData = [userStats.femaleToMaleRatio, 1 - userStats.femaleToMaleRatio];
+      this.pieChartData = [userStats.aThroughMLastNameRatio, 1 - userStats.aThroughMLastNameRatio];
     }
   }
 }

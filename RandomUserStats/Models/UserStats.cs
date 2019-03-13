@@ -9,5 +9,6 @@ namespace RandomUserStats.Models
 		public double AThroughMLastNameRatio { get; set; }
 		public List<StatePopulationPercentage> MostPopulousStates { get; set; }
 		public AgeRangePercentages AgeRangePercentages { get; set; }
+		public Dictionary<string, int> PreferredTitleStatistics { get; set;}
 	}
 }

@@ -4,6 +4,7 @@ export class UserStats {
     aThroughMLastNameRatio: number;
     mostPopulousStates: StatePopulationPercentage[];
     ageRangePercentages: AgeRangePercentages;
+    preferredTitleStatistics: any;
 }
 
 export class StatePopulationPercentage {

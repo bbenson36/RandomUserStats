@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -38,19 +39,30 @@ namespace RandomUserStats
 				buffer.AppendLine($"Percentage of last names that start with A-M versus N-Z: {ToPercent(userStats.AThroughMLastNameRatio)}");
 				buffer.AppendLine();
 
-				buffer.AppendLine($"Percentage of people in each state, up to the top 10 most populous states:");
 				AddMostPopulousStates(buffer, userStats.MostPopulousStates);
 				buffer.AppendLine();
 
 				AddAgeRangePercentages(buffer, userStats.AgeRangePercentages);
 				buffer.AppendLine();
+
+				AddPreferredTitles(buffer, userStats.PreferredTitleStatistics);
 			}
 
 			return response.WriteAsync(buffer.ToString());
 		}
 
+		private static void AddPreferredTitles(StringBuilder buffer, Dictionary<string, int> preferredTitleStatistics)
+		{
+			buffer.AppendLine($"Number of people who prefer each title:");
+			foreach (var preferredTitleInfo in preferredTitleStatistics)
+			{
+				buffer.AppendLine($"	{preferredTitleInfo.Key}: {preferredTitleInfo.Value}");
+			}
+		}
+
 		private static void AddMostPopulousStates(StringBuilder buffer, List<StatePopulationPercentage> mostPopulousStates)
 		{
+			buffer.AppendLine($"Percentage of people in each state, up to the top 10 most populous states:");
 			foreach (var state in mostPopulousStates)
 			{
 				buffer.AppendLine($"	{state.State}: {ToPercent(state.PercentageOfTotalPopulation)}");

@@ -18,19 +18,34 @@ namespace RandomUserStats.Services
 					AThroughMFirstNameRatio = FirstNameAThroughMRatio(users),
 					AThroughMLastNameRatio = LastNameAThroughMRatio(users),
 					AgeRangePercentages = GetPercentOfPeopleInAgeRange(users),
-					MostPopulousStates = GetStatePopulationPercentages(users)
+					MostPopulousStates = GetStatePopulationPercentages(users),
+					PreferredTitleStatistics = GetPreferredTitleStatistics(users)
 				};
 			});
 		}
 
-		/*1. Percentage female versus male
-	2. Percentage of first names that start with A-M versus N-Z
-	3. Percentage of last names that start with A-M versus N-Z
-	4. Percentage of people in each state, up to the top 10 most populous states
-	5. Percentage of females in each state, up to the top 10 most populous states
-	6. Percentage of males in each state, up to the top 10 most populous states
-	7. Percentage of people in the following age ranges: 0-20, 21-40, 41-60, 61-80, 81-100,
-	100+*/
+
+		private Dictionary<string, int> GetPreferredTitleStatistics(List<User> users)
+		{
+			var titleDictionary = new Dictionary<string, int>();
+			if (users.Any(x => x.Name == null))
+			{
+				return titleDictionary;
+			}
+			foreach (var title in users.Select(x => x.Name.Title ?? "none"))
+			{
+				if (!titleDictionary.ContainsKey(title))
+				{
+					titleDictionary[title] = 1;
+				}
+				else
+				{
+					titleDictionary[title]++;
+				}
+			}
+			return titleDictionary;
+		}
+
 		private double FemaleToMaleRatio(List<User> users)
 		{
 			return ((double)users.Count(x => x.Gender == Gender.Female)) / users.Count;

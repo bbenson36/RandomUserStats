@@ -1,9 +1,24 @@
-<form class="user-data" (ngSubmit)="onSubmit()">
-  <mat-form-field class="user-data-full-width">
-    <textarea matInput placeholder="Json UserData" [(ngModel)]="userDataInput" name="userData"></textarea>
-  </mat-form-field>
-  <button mat-raised-button type="submit" color="primary">Submit</button>
-
-  <button mat-raised-button color="primary" (click)="file.click()">Upload</button> <input hidden type="file"
-    (change)="handleFileInput($event.target.files)" #file>
-</form>
+<div class="dark-overlay"><mat-spinner *ngIf="show"></mat-spinner></div>
+<mat-drawer-container class="example-container">
+  <mat-drawer mode="side" opened>
+    <mat-list>
+      <mat-list-item>
+        <button mat-button (click)="file.click()">Upload</button>
+        <input hidden type="file" (change)="handleFileInput($event.target.files)" #file>
+      </mat-list-item>
+      <mat-list-item>
+        <button mat-button (click)="getRandomData()">Get 50 Random Users</button>
+      </mat-list-item>
+    </mat-list>
+  </mat-drawer>
+  <mat-drawer-content>
+    <form class="user-data" (ngSubmit)="onSubmit()">
+      <div class="example-container">
+        <mat-form-field class="user-data-full-width">
+          <textarea matInput placeholder="Json UserData" [(ngModel)]="userDataInput" name="userData"></textarea>
+        </mat-form-field>
+      </div>
+      <button mat-raised-button type="submit" color="primary">Submit</button>
+    </form>
+  </mat-drawer-content>
+</mat-drawer-container>

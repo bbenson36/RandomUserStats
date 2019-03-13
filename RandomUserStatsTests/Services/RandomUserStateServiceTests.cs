@@ -263,5 +263,60 @@ namespace RandomUserStatsTests.Services
 			Assert.Equal(.25, ageRanges.OverOneHundred);
 
 		}
+
+		[Fact]
+		public async void ProperlyCalculatesUserTitleCounts()
+		{
+			var users = new List<User>()
+			{
+				new User()
+				{
+					Name = new Name
+					{
+						Title = "Mr"
+					}
+				},
+				new User()
+				{
+					Name = new Name
+					{
+						Title = "Mr"
+					}
+				},
+				new User()
+				{
+					Name = new Name
+					{
+						Title = "Mr"
+					}
+				},
+				new User()
+				{
+					Name = new Name
+					{
+						Title = "Mrs"
+					}
+				},
+				new User()
+				{
+					Name = new Name
+					{
+					}
+				}
+			};
+
+			var sut = new RandomUserStatService();
+
+			var result = await sut.GenerateReport(users);
+
+			var titleStatistics = result.PreferredTitleStatistics;
+
+			Assert.True(titleStatistics.ContainsKey("Mrs"));
+			Assert.Equal(1, titleStatistics["Mrs"]);
+			Assert.True(titleStatistics.ContainsKey("Mr"));
+			Assert.Equal(3, titleStatistics["Mr"]);
+			Assert.True(titleStatistics.ContainsKey("none"));
+			Assert.Equal(1, titleStatistics["none"]);
+		}
 	}
 }

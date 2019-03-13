@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UserStatsService } from '../../services/user-stats.service';
-import { UserStats } from '../../user-stats';
+import { UserStatsService } from '../../../services/user-stats.service';
+import { UserStats } from '../../../user-stats';
 import { ChartOptions, ChartType } from 'chart.js';
 import { Label, SingleDataSet } from 'ng2-charts';
 

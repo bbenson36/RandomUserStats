@@ -7,6 +7,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class UserStatsService {
+
+  private fiftyRandomUsersUrl = 'https://randomuser.me/api/?results=50';
+
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -39,5 +42,9 @@ export class UserStatsService {
         this.dataStore.userStats = data;
         this._userStats.next(Object.assign({}, this.dataStore).userStats);
       }, error => console.log('Could not load stats'));
+  }
+
+  requestRandomUsers() {
+    return this.http.get<string>(this.fiftyRandomUsersUrl);
   }
 }
