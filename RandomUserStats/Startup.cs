@@ -26,9 +26,9 @@ namespace RandomUserStats
 			services.AddMvc(options =>
 			{
 				options.RespectBrowserAcceptHeader = true;
-				options.OutputFormatters.Add(new XmlSerializerOutputFormatter());
 				options.OutputFormatters.Add(new MyTextOutputFormatter());
 			})
+				.AddXmlDataContractSerializerFormatters()
 				.SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
 			services.AddScoped<IRandomUserStatService, RandomUserStatService>();

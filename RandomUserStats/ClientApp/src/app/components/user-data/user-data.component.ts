@@ -13,7 +13,7 @@ export class UserDataComponent implements OnInit {
   userDataInput = '';
   dialogRef: MatDialogRef<ProgressSpinnerDialogComponent>;
 
-  constructor(private userStatsService: UserStatsService,
+  constructor(public userStatsService: UserStatsService,
     private router: Router, private dialog: MatDialog) { }
 
   ngOnInit() {

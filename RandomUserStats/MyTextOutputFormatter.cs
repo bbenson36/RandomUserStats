@@ -20,7 +20,7 @@ namespace RandomUserStats
 
 		public override bool CanWriteResult(OutputFormatterCanWriteContext context)
 		{
-			return context.Object is UserStats;
+			return context.ContentType == ContentType && context.Object is UserStats;
 		}
 
 		public override Task WriteResponseBodyAsync(OutputFormatterWriteContext context)
