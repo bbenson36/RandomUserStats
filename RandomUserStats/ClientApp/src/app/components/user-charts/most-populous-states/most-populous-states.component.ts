@@ -16,7 +16,7 @@ export class MostPopulousStatesComponent implements OnInit {
   };
   public barChartLabels: Label[] = ['Durango', 'Zacatecas'];
   public barChartData: ChartDataSets[] = [
-    { data: [.8, .2], label: 'Total Population' },
+    { data: [.8, .2], label: '% Total Population' },
     { data: [.5, .3], label: 'Male Ratio' },
     { data: [.5, .7], label: 'Female Ratio' }
   ];
@@ -33,7 +33,7 @@ export class MostPopulousStatesComponent implements OnInit {
     if (userStats) {
       this.barChartLabels = userStats.mostPopulousStates.map(statePop => statePop.state);
       this.barChartData = [
-        { data: userStats.mostPopulousStates.map(statPop => statPop.percentageOfTotalPopulation), label: 'Total Population' },
+        { data: userStats.mostPopulousStates.map(statPop => statPop.percentageOfTotalPopulation), label: '% of Total Population' },
         { data: userStats.mostPopulousStates.map(statePop => statePop.malePercent), label: 'Male Ratio' },
         { data: userStats.mostPopulousStates.map(statePop => statePop.femalePercent), label: 'Female Ratio' }
       ];
